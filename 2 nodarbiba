@@ -1,0 +1,39 @@
+%% Merijjumu datu apstrade
+%% Darba merkis
+% * Iepazities ar merijumu apstrades pamatiem 
+% * Iemacities pielitot apgutas zinasanas 
+% prieksmetos kur ir nepiecesama merijuma datu apstrade (Fizika.ETP)
+% * Iemacities veidot atskaites ar matlab palidzibu 
+%% Ievadisim eksperementalus datus:
+Um = [-1 0.3 1.5 2.5 3.2];
+Im = [1.1 2.2 2.1 3.2 4.7];
+% Pamaiginasim uzzimet grafiku 
+plot(Um,Im,'o-') % neder jo ir lauzta linija
+% meiginasim atrast matematisku skaribu 
+% kas saista tos punktos
+% sakaribu meklesim polinomala veida 
+% saksim ar 2. kartas polinomu 
+% y = C1*x^2+C2*x+C3
+
+% Funkcija kas atdot polinoma kaeficentus 
+% saucas polyfit (polynomal fitting)
+% sintakse:
+% C = polyfit (x,y,N) , N - polinoma karta 
+% c - polinom koeficents ko atdaris polyfit 
+C = polyfit(Um,Im,1)
+% lai uzzimetu polinomu mes esam atradusi koificentus
+% lai uzzimetu panemsim x ar mazako soli 
+U = -1:0.1:3.2
+% jareikina polinoms 
+% I = C(1)*U.^3+C(2)*U.^2+C(3)*U+C(4);
+plot(Um,Im,'o',U,I)
+% to var atomatizet ar funkciju polyval
+I = polyval(C,U);
+% uzzimesim
+plot(Um,Im,'o',U,I)
+%% Secinajumi:
+% koes iemacijos šaja darba, secinajumi
+%nedrikst sakrit ar kolegu secinajumiem
+% 3-4 teikumi 
+% kad vis gatavs - vedosim pdf atsakiti 
+% janospiez pogu - publish 
