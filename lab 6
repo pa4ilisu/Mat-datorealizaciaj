@@ -1,0 +1,45 @@
+%% 6.laboratorijas darbs 
+%% videjas vertibas atrasanas ar 3a,3b,3c
+t = 0:0.1:4;
+N = length(t);
+xvid3a = 1/(N-1)*sum(sig(t(1:end-1)))
+xvid3b = 1/(N-1)*sum(sig(t(2:end)))
+h = (t(end)-t(1))/(N-1)
+xvid3c = 1/(N-1)*sum(sig(t(1:end-1)+h/2))
+%% videjas veribas atrasana integrala
+% atrasanai izmantojot matlab iebuveto 
+% funkciju quad
+% quad (fun_handle,ta,tb,aprekinu_kluda)
+xvidquad = 1/(t(end)-t(1))*quad(@sig,t(1),t(end),1e-3)
+%% efektivas vertibas atrasana uz 3a formulas 
+% piemiera 
+t = 0:0.1:4;
+N = length(t);
+sigkv = @(t) (sig(t)).^2;
+xef3a = sqrt(1/(N-1)*sum(sigkv(t(1:end-1))))
+%% efektivas veribas atrasana ar 
+% quad 
+xefdquad = sqrt(1/(t(end)-t(1))*quad(sigkv,t(1),t(end),1e-3))
+%% rezultatu noformesana tabulas veida 
+% piemers ar 3a farmulu 
+dt = [0.5 0.01 0.05];
+fprintf('__________________________\n')
+for dtc = dt
+    t = 0:dtc:4;
+    N = length(t);
+    xvid3a = 1/(N-1)*sum(sig(t(1:end-1)));
+    xef3a = sqrt(1/(N-1)*sum(sigkv(t(1:end-1))));
+    fprintf('| dt=%0.2f | vv3a=%f | vvef3a=%f |\n',dtc,xvid3a,xef3a);
+end
+fprintf('__________________________\n')
+%% rezultatu noformesana tabulas verida
+% piemiers integrali reikinot ar quad
+tol = [1e-1 1e-2 1e-3]
+fprintf('__________________________\n')
+for tolc = tol
+    xvidquad = 1/(t(end)-t(1))*quad(@sig,t(1),t(end),tolc);
+    xefdquad = sqrt(1/(t(end)-t(1))*quad(sigkv,t(1),t(end),tolc));
+    fprintf('| tol=%0.3f | vvquad=%f | efquad=%f \n',tolc,xvidquad,xefdquad);
+end 
+fprintf('__________________________\n')
+    
